@@ -17,8 +17,8 @@ fi
 mkdir -p "$VIRTUAL_RAID"
 
 # 3. Mount with remapped permissions (Host remains untouched)
-# This makes everything in REAL_RAID look like it's owned by 101000 inside VIRTUAL_RAID
-bindfs --map=root/root:@101000/@101000 "$REAL_RAID" "$VIRTUAL_RAID"
+# Force everything to appear as the container's UID 1000 (Host 101000)
+bindfs -u 101000 -g 101000 --create-for-user=101000 --create-for-group=101000 "$REAL_RAID" "$VIRTUAL_RAID"
 
 # 4. Add the VIRTUAL path to the LXC config
 if ! grep -q "$VIRTUAL_RAID" "$CONF_FILE"; then
