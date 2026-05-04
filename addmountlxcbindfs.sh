@@ -54,7 +54,7 @@ else
 fi
 
 # 5. Make bindfs sticky in /etc/fstab
-FSTAB_ENTRY="${REAL_RAID} ${VIRTUAL_RAID} fuse.bindfs force-user=${MAPPING_ID},force-group=${MAPPING_ID},create-for-user=${MAPPING_ID},allow_other 0 0"
+FSTAB_ENTRY="${REAL_RAID} ${VIRTUAL_RAID} fuse.bindfs force-user=${MAPPING_ID},force-group=${MAPPING_ID},create-for-user=${MAPPING_ID},allow_other,x-systemd.requires=zfs-mount.service 0 0"
 
 if grep -q "$VIRTUAL_RAID" /etc/fstab; then
     echo "[!] Fstab entry for $VIRTUAL_RAID already exists. Skipping."
